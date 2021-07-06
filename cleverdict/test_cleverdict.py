@@ -5,7 +5,7 @@ from collections import UserDict
 from textwrap import dedent
 import json
 from pathlib import Path
-import keyring
+# import keyring
 from itertools import permutations
 
 
@@ -216,7 +216,8 @@ class Test_Core_Features:
 
     def test_info(self, capsys):
         global c  # globals are not 'seen' by info()
-        z = b = a = c = CleverDict.fromkeys((0, 1, 2, "a", "what?", "return"), 0)
+        z = b = a = c = CleverDict.fromkeys(
+            (0, 1, 2, "a", "what?", "return"), 0)
         c.add_alias(1, "one")
         c.delete_alias("_True")
         c.setattr_direct("b", "B")
@@ -242,7 +243,8 @@ CleverDict:
         )
         del a
         assert (
-            c.info(as_str=True) == "CleverDict:\n    b is z\n    b['a'] == b.a == 'A'"
+            c.info(
+                as_str=True) == "CleverDict:\n    b is z\n    b['a'] == b.a == 'A'"
         )
         del b
         assert c.info(as_str=True) == "CleverDict:\n    z['a'] == z.a == 'A'"
@@ -263,7 +265,8 @@ class Test_Misc:
 
     def test_only(self):
         """only=[list] should return output ONLY matching the given keys"""
-        x = CleverDict({"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
+        x = CleverDict(
+            {"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
         a_and_o = CleverDict({"Apples": "Green", "Oranges": "Purple"})
         for func in "__repr__ to_json to_dict to_list to_lines info".split():
             as_str = {"as_str": True} if func == "info" else {}
@@ -274,7 +277,8 @@ class Test_Misc:
             assert str(result1) == str(result2).replace("a_and_o", "x")
 
     def test_only_edge_cases(self):
-        x = CleverDict({"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
+        x = CleverDict(
+            {"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
         with pytest.raises(TypeError):
             x.to_list(exclude=[], only=[])
             x.to_list(ignore=[], only=[])
@@ -296,7 +300,8 @@ class Test_Misc:
         """
         only= exclude= ignore= should accept iterables AND single items strings.
         """
-        x = CleverDict({"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
+        x = CleverDict(
+            {"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
         assert x.__repr__(only="Apples") == x.__repr__(only=["Apples"])
         assert x.__repr__(ignore="Apples") == x.__repr__(ignore=["Apples"])
         assert x.to_json(ignore="Apples") == x.to_json(ignore=["Apples"])
@@ -316,7 +321,8 @@ class Test_Misc:
 
     def test_fullcopy_plus_filter(self):
         """ fullcopy= can be used with other arguments only= ignore= or exclude=.  Error must be handled gracefully."""
-        x = CleverDict({"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
+        x = CleverDict(
+            {"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
         assert "Apples" not in x.to_json(fullcopy=True, ignore="Apples")
         assert "Apples" not in x.to_json(fullcopy=True, exclude="Apples")
         assert "Oranges" not in x.to_json(fullcopy=True, only="Apples")
@@ -363,7 +369,8 @@ class Test_Misc:
         assert list(x.keys()) == ["Oranges"]
 
         # CleverDict
-        x = CleverDict({"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
+        x = CleverDict(
+            {"Apples": "Green", "Bananas": "Yellow", "Oranges": "Purple"})
         y = CleverDict(x, only="Apples")
         assert list(y.keys()) == ["Apples"]
         y = CleverDict(x, exclude="Apples")
@@ -381,7 +388,8 @@ class Test_Misc:
         assert list(x.keys()) == ["value1"]
 
         # fromkeys
-        x = CleverDict.fromkeys(["Abigail", "Tino", "Isaac"], "Year 9", only="Abigail")
+        x = CleverDict.fromkeys(
+            ["Abigail", "Tino", "Isaac"], "Year 9", only="Abigail")
         assert list(x.keys()) == ["Abigail"]
         x = CleverDict.fromkeys(
             ["Abigail", "Tino", "Isaac"], "Year 9", exclude="Abigail"
@@ -410,8 +418,10 @@ class Test_Misc:
         __init__ can only take one of only= exclude= ignore=.
         Otherwise should fail gracefully.
         """
-        perms = list(permutations(["only=[1],", "ignore=[2],", "exclude=[3],"]))
-        perms += list(permutations(["only=[1],", "ignore=[2],", "exclude=[3],"], 2))
+        perms = list(permutations(
+            ["only=[1],", "ignore=[2],", "exclude=[3],"]))
+        perms += list(permutations(["only=[1],",
+                      "ignore=[2],", "exclude=[3],"], 2))
         perms = ["".join(list(x)) for x in perms]
         for args in perms:
             with pytest.raises(TypeError):
@@ -1100,7 +1110,8 @@ class Test_README_examples:
         assert x["review"] == "tomorrow"
 
     def test_IMPORT_EXPORT_2(self):
-        x = CleverDict([("value1", "one"), ["value2", "two"], ("value3", "three")])
+        x = CleverDict(
+            [("value1", "one"), ["value2", "two"], ("value3", "three")])
         assert x.value1 == "one"
         assert x["value2"] == "two"
         assert getattr(x, "value3") == "three"
@@ -1128,7 +1139,8 @@ class Test_README_examples:
         a = X()
         a.name = "Percival"
         x = CleverDict(vars(a))
-        assert repr(x) == "CleverDict({'name': 'Percival'}, _aliases={}, _vars={})"
+        assert repr(
+            x) == "CleverDict({'name': 'Percival'}, _aliases={}, _vars={})"
         assert x.to_dict() == {"name": "Percival"}
 
     def test_IMPORT_EXPORT_7(self):
@@ -1183,7 +1195,8 @@ class Test_README_examples:
     def test_NAMES_AND_ALIASES_1(self):
         x = CleverDict({7: "Seven"})
         assert x._7 == "Seven"
-        assert repr(x) == "CleverDict({7: 'Seven'}, _aliases={'_7': 7}, _vars={})"
+        assert repr(
+            x) == "CleverDict({7: 'Seven'}, _aliases={'_7': 7}, _vars={})"
         x.add_alias(7, "NumberSeven")
         assert x._aliases == {7: 7, "_7": 7, "NumberSeven": 7}
         x.add_alias(7, "zeven")
@@ -1196,7 +1209,8 @@ class Test_README_examples:
         assert x.to_dict(ignore=["zeven"]) == {}
         assert x.to_list(ignore=["zeven"]) == []
         x.delete_alias(["_7", "NumberSeven"])
-        assert repr(x) == "CleverDict({7: 'Seven'}, _aliases={'zeven': 7}, _vars={})"
+        assert repr(
+            x) == "CleverDict({7: 'Seven'}, _aliases={'zeven': 7}, _vars={})"
         with pytest.raises(AttributeError):
             assert x._7
         with pytest.raises(KeyError):
@@ -1243,7 +1257,8 @@ class Test_README_examples:
 
     def test_AUTOSAVE_1(self):
         """ Default option: data dictionary saved only """
-        x = CleverDict({"Patient Name": "Wobbly Joe", "Test Result": "Positive"})
+        x = CleverDict({"Patient Name": "Wobbly Joe",
+                       "Test Result": "Positive"})
         assert not hasattr(x, "save_path")
         assert x.save.__name__ == "save"
         x.autosave(silent=True)
@@ -1255,7 +1270,8 @@ class Test_README_examples:
 
     def test_AUTOSAVE_2(self):
         """ Changing from default to fullcopy changes save_path"""
-        x = CleverDict({"Patient Name": "Wobbly Joe", "Test Result": "Positive"})
+        x = CleverDict({"Patient Name": "Wobbly Joe",
+                       "Test Result": "Positive"})
         x.autosave(silent=True)
         path = x.save_path
         x.autosave(silent=True, fullcopy=True)
@@ -1266,7 +1282,8 @@ class Test_README_examples:
 
     def test_AUTOSAVE_3(self):
         """ .add_alias triggers autosave """
-        x = CleverDict({"Patient Name": "Wobbly Joe", "Test Result": "Positive"})
+        x = CleverDict({"Patient Name": "Wobbly Joe",
+                       "Test Result": "Positive"})
         x.autosave(silent=True)
         x.add_alias("Patient Name", "name")
         assert '"name": "Patient Name"' not in get_data(x.save_path)
@@ -1277,7 +1294,8 @@ class Test_README_examples:
 
     def test_AUTOSAVE_4(self):
         """ .setattr_direct and del DON'T trigger autosave (default) """
-        x = CleverDict({"Patient Name": "Wobbly Joe", "Test Result": "Positive"})
+        x = CleverDict({"Patient Name": "Wobbly Joe",
+                       "Test Result": "Positive"})
         x.autosave(silent=True)
         x.setattr_direct("internal_code", "xyz123")
         assert '"internal_code": "xyz123"' not in get_data(x.save_path)
@@ -1286,7 +1304,8 @@ class Test_README_examples:
 
     def test_AUTOSAVE_5(self):
         """ .setattr_direct and del DO trigger autosave (fullcopy)"""
-        x = CleverDict({"Patient Name": "Wobbly Joe", "Test Result": "Positive"})
+        x = CleverDict({"Patient Name": "Wobbly Joe",
+                       "Test Result": "Positive"})
         x.autosave(silent=True, fullcopy=True)
         x.setattr_direct("internal_code", "xyz123")
         assert '"internal_code": "xyz123"' in get_data(x.save_path)
@@ -1295,7 +1314,8 @@ class Test_README_examples:
 
     def test_AUTOSAVE_6(self):
         """ 'off' reverts to inactive default save behaviour """
-        x = CleverDict({"Patient Name": "Wobbly Joe", "Test Result": "Positive"})
+        x = CleverDict({"Patient Name": "Wobbly Joe",
+                       "Test Result": "Positive"})
         x.autosave(silent=True)
         assert x.save.__name__ == "_auto_save_data"
         assert x.delete.__name__ == "_auto_save_data"
@@ -1423,31 +1443,31 @@ class Test_README_examples:
         )
 
 
-class Test_at_property:
-    class User:
-        def __init__(self):
-            self.username = "testname"
-            self.account = "testaccount"
+# class Test_at_property:
+#     class User:
+#         def __init__(self):
+#             self.username = "testname"
+#             self.account = "testaccount"
 
-        @property
-        def password(self):
-            return keyring.get_password(self.account, self.username)
+#         @property
+#         def password(self):
+#             return keyring.get_password(self.account, self.username)
 
-        @password.setter
-        def password(self, value):
-            keyring.set_password(self.account, self.username, value)
+#         @password.setter
+#         def password(self, value):
+#             keyring.set_password(self.account, self.username, value)
 
-        @password.deleter
-        def password(self):
-            keyring.delete_password(self.account, self.username)
+#         @password.deleter
+#         def password(self):
+#             keyring.delete_password(self.account, self.username)
 
-    user = User()
-    user.password = "testpw"
-    assert user.password == "testpw"
-    assert keyring.get_password("testaccount", "testname") == "testpw"
-    del user.password
-    assert not user.password
-    assert not keyring.get_password("testaccount", "testname") == "testpw"
+#     user = User()
+#     user.password = "testpw"
+#     assert user.password == "testpw"
+#     assert keyring.get_password("testaccount", "testname") == "testpw"
+#     del user.password
+#     assert not user.password
+#     assert not keyring.get_password("testaccount", "testname") == "testpw"
 
 
 if __name__ == "__main__":

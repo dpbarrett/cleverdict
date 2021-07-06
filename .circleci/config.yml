@@ -34,7 +34,6 @@ jobs:
       - python/install-packages:
           args: "--dev"
           pkg-manager: pipenv
-          test-tool: pytest
       - run:
           name: Create Artifacts
           command: |

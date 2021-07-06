@@ -37,9 +37,8 @@ jobs:
           name: Create Artifacts
           command: |
             mkdir -p /tmp/artifacts;
-            pipenv shell;
-            pip list > /tmp/artifacts/pip.list;
-            cp Pipfile.lock /tmp/artifacts/Pipfile.lock;
+            pipenv run pip list > /tmp/artifacts/pip.list;
+            pipenv run cp Pipfile.lock /tmp/artifacts/Pipfile.lock;
       - store_artifacts:
           path: /tmp/artifacts
       - run:

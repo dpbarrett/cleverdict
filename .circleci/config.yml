@@ -47,8 +47,10 @@ jobs:
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: pipenv run pytest --cov=./
+          command: |
+            mkdir -p test-results/initial/;
+            pipenv run pytest --cov=./
       - store_test_results:
-          path: test-results
+          path: test-results/initial
       - codecov/upload:
           file: { { test-results } }

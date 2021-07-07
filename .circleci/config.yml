@@ -51,6 +51,6 @@ jobs:
             mkdir -p /tmp/test-results/initial/;
             pipenv run pytest --cov=./
       - store_test_results:
-          path: /tmp/test-results/initial/
+          path: test-results
       - codecov/upload:
-          file: /tmp/test-results/initial/
+          file: test-results

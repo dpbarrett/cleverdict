@@ -52,7 +52,8 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: |
-            pipenv run pytest --cov=./
+            pipenv run pytest --cov-report html:test-results --cov=./;
+            cp .coverage test-results/.coverage;
       - store_test_results:
           path: test-results
       - codecov/upload:

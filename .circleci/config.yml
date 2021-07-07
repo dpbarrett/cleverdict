@@ -49,10 +49,18 @@ jobs:
           command: |
             mkdir -p test-results;
       - run:
-          name: Run tests
+          name: Run tests for html
           # This assumes pytest is installed via the install-package step above
           command: |
             pipenv run pytest --cov-report html:test-results --cov=./;
+      - run:
+          name: Run tests again for xml
+          # This assumes pytest is installed via the install-package step above
+          command: |
+            pipenv run pytest --cov-report xml:test-results/cov.xml --cov=./;
+      - run:
+          name: Copy results to test-results
+          command: |
             cp .coverage test-results/.coverage;
       - store_test_results:
           path: test-results

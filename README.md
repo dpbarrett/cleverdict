@@ -1,7 +1,13 @@
 # `CleverDict`
+
 <p align="center">
     <a href="https://pypi.python.org/pypi/cleverdict"><img alt="PyPI" src="https://img.shields.io/pypi/v/cleverdict.svg"></a>
-	<a href="https://pypi.python.org/pypi/cleverdict"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/cleverdict.svg"></a>
+    <a hre f="https://pypi.python.org/pypi/cleverdict"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/cleverdict.svg"></a>
+    <a href="https://circleci.com/gh/dpbarrett/cleverdict/tree/circleci-project-setup">
+        <img alt="circleci build status" src="https://circleci.com/gh/dpbarrett/cleverdict/tree/circleci-project-setup.svg?style=shield"></a>
+    <a href="https://codecov.io/gh/dpbarrett/cleverdict">
+        <img src="https://codecov.io/gh/dpbarrett/cleverdict/tree/testing/graph/badge.svg?token=H37SRJ8IGG"/>
+    </a>
     <a href="https://pepy.tech/project/cleverdict"><img alt="Downloads" src="https://pepy.tech/badge/cleverdict"></a>
     <a href="#Contribution" title="Contributions are welcome"><img src="https://img.shields.io/badge/contributions-welcome-green.svg"></a>
     <a href="https://github.com/pfython/cleverdict/releases" title="CleverDict"><img src="https://img.shields.io/github/release-date/pfython/cleverdict?color=green&label=updated"></a>
@@ -26,7 +32,6 @@
 9. [CREATING YOUR OWN AUTO-SAVE FUNCTION](#9-creating-your-own-auto-save-function)
 10. [CONTRIBUTING](#10-contributing)
 11. [CREDITS](#11-credits)
-
 
 ## 1. OVERVIEW
 
@@ -69,7 +74,6 @@ Very lightweight - no dependencies:
 or to cover all bases...
 
     python -m pip install cleverdict --upgrade
-
 
 ## 3. IMPORTING TO CLEVERDICT
 
@@ -199,7 +203,6 @@ If you want to start your output from a specific line you can again use `start_f
 
 > That '`\n`' at the end of the output is actually Line 7 which is empty.
 
-
 Although primarily intended for numerical indexing, you can also use *strings* with `.to_lines()`, which is handy for setting 'bookmarks' for example.  You can choose between creating an **alias** (recommended - see next Section) or actually creating/overwriting with a new **key**:
 
     >>> x.add_alias(6, "The End")
@@ -302,9 +305,7 @@ As you probably guessed, you can safely delete an alias with `.delete_alias()`, 
     >>> x
     CleverDict({}, _aliases={}, _vars={})
 
-
 ## 6. DEEPER DIVE INTO ATTRIBUTE NAMES
-
 
 **QUIZ QUESTION:** Did you know that since [PEP3131](https://www.python.org/dev/peps/pep-3131/) many (but not all) unicode characters are valid in attribute names?
 
@@ -337,15 +338,14 @@ You'll be relieved to know `CleverDict` handles these cases but we thought it wa
     x is y is z
     x[1] == x['_1'] == x['_True'] == x._1 == x._True == 'the truth'
 
-
 And if you use `info(as_str=True)` you'll get the results as a printable string:
 
     >>> x.info(as_str=True)
 
     "CleverDict:\n    x is y is z\n    x[1] == x['_1'] == x['_True'] == x._1 == x._True == 'the truth'"
 
-
 ## 7. SETTING AN ATTRIBUTE WITHOUT CREATING A DICTIONARY ITEM
+
 We've included the `.setattr_direct()` method in case you want to set an attribute *without* creating the corresponding dictionary key/value.  This could be useful for storing 'internal' data, objects and methods for example, and is used by `CleverDict` itself to store aliases in `._aliases` and the location of the autosave file in `save_path`.  Any variables which are set directly with `.setattr_direct()` are stored in `_vars`:
 
     >>> x = CleverDict()
@@ -372,16 +372,13 @@ Subject to normal JSON limitations, you can *completely reconstruct* your origin
 
 This even solves the pesky problem of `json.dumps()` converting numeric keys to strings e.g. `{1: "one"}` to `{"1": "one"}`.  By recording the mappings as part of the JSON, `CleverDict` is able to remember whether your initial key was numeric or a string.  Niiiiice.
 
-
 ## 8. THE AUTO-SAVE FEATURE
-
 
 Following the "*batteries included*" philosophy, we've included not one but **two** powerful autosave/autodelete options which, when activated, will save your `CleverDict` data to the recommended 'Settings' folder of whichever Operating System you're using.
 
 ---
 
 **AUTOSAVE OPTION #1: DICTIONARY DATA ONLY**
-
 
     >>> x = CleverDict({"Patient Name": "Wobbly Joe", "Test Result": "Positive"})
     >>> x.autosave()
@@ -403,7 +400,6 @@ In **Section 7** you saw how to use `.to_json(fullcopy=True)` to create a comple
 With this autosave option, **all dictionary data**, **all aliases** (in `_aliases`), and **all attributes** (including `_vars`) will be saved whenever they're created, changed, or deleted.
 
 ---
-
 
 In both `.autosave()` options above, the file location is stored as `.save_path` using `.setattr_direct()` which you read about above (unless you skipped or fell asleep!).
 
@@ -514,10 +510,10 @@ We'd love to see Pull Requests (and relevant tests) from other contributors, par
 
 For a list of all outstanding **Feature Requests** and (heaven forbid!) actual *Issues* please have a look here and maybe you can help out?
 
-https://github.com/PFython/cleverdict/issues?q=is%3Aopen+is%3Aissue
-
+<https://github.com/PFython/cleverdict/issues?q=is%3Aopen+is%3Aissue>
 
 ## 11. CREDITS
+
 `CleverDict` was developed jointly by Ruud van der Ham, Peter Fison, Loic Domaigne, and Rik Huygen who met on the friendly and excellent Pythonista Cafe forum (www.pythonistacafe.com).  Peter got the ball rolling after noticing a super-convenient, but not fully-fledged feature in Pandas that allows you to (mostly) use `object.attribute` syntax or `dictionary['key']` syntax interchangeably. Ruud, Loic and Rik then started swapping ideas for a hybrid  dictionary/data class, originally based on `UserDict` and the magic of `__getattr__` and `__setattr__`.
 
 > **Fun Fact:** `CleverDict` was originally called `attr_dict` but several confusing flavours of this and `AttrDict` exist on PyPi and Github already.  Hopefully this new tongue-in-cheek name is more memorable and raises a smile ;)
@@ -525,5 +521,3 @@ https://github.com/PFython/cleverdict/issues?q=is%3Aopen+is%3Aissue
 If you find `cleverdict` helpful, please feel free to:
 
 <a href="https://www.buymeacoffee.com/pfython" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png" alt="Buy Me A Coffee" width="217px" ></a>
-
-

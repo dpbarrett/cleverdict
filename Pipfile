@@ -3,3 +3,4 @@ cleverdict = {editable = true, ref = "testing", git = "https://github.com/dpbarr
 
 [dev-packages]
 pytest = "6.2.4"
+pytest-cov = "*"

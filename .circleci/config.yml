@@ -36,14 +36,14 @@ jobs:
       - python/install-packages:
           args: "--dev"
           pkg-manager: pipenv
-      # - run:
-      #     name: Create Artifacts
-      #     command: |
-      #       mkdir -p /tmp/artifacts;
+      - run:
+          name: Create Artifacts
+          command: |
+            mkdir -p /tmp/artifacts;
       #       pipenv run pip list > /tmp/artifacts/pip.list;
       #       pipenv run cp Pipfile.lock /tmp/artifacts/Pipfile.lock;
-      # - store_artifacts:
-      #     path: /tmp/artifacts
+      - store_artifacts:
+          path: /tmp/artifacts
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above

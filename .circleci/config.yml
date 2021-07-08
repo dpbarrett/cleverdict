@@ -48,7 +48,7 @@ jobs:
           command: |
             pipenv run pytest --cov-config=.coveragerc --cov-report xml --cov-report html --cov;
       - store_test_results:
-          path: test-results
+          path: /home/circleci/project/
       - store_artifacts:
           path: test-results
       - codecov/upload:

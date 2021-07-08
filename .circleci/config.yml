@@ -25,46 +25,33 @@ jobs:
     docker:
       - image: cimg/python:3.9.5
     resource_class: small
-    # Checkout the code as the first step. This is a dedicated CircleCI step.
-    # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
-    # Here we're making sure we use just use the system-wide pip. By default it uses the project root's requirements.txt.
-    # Then run your tests!
-    # CircleCI will report the results back to your VCS provider.
     # working_directory: /tmp
     steps:
       - checkout
       - python/install-packages:
           args: "--dev"
           pkg-manager: pipenv
-      - run:
-          name: Create Artifacts
-          command: |
-            mkdir -p /tmp/artifacts;
+      # - run:
+      #     name: Create Artifacts
+      #     command: |
+      #       mkdir -p /tmp/artifacts;
       #       pipenv run pip list > /tmp/artifacts/pip.list;
       #       pipenv run cp Pipfile.lock /tmp/artifacts/Pipfile.lock;
-      - store_artifacts:
-          path: /tmp/artifacts
+      # - store_artifacts:
+      #     path: /tmp/artifacts
       - run:
-          name: Create test-results
+          name: Create test-results directory
           command: |
             mkdir -p test-results;
       - run:
-          name: Run tests for html
-          # This assumes pytest is installed via the install-package step above
+          name: Run tests
           command: |
-            pipenv run pytest --cov-report html:test-results --cov=./;
-      - run:
-          name: Run tests again for xml
-          # This assumes pytest is installed via the install-package step above
-          command: |
-            pipenv run pytest --cov-report xml:test-results/cov.xml --cov=./;
-      - run:
-          name: Copy results to test-results
-          command: |
-            cp .coverage test-results/.coverage;
+            pipenv run pytest --cov-config=.coveragerc;
       - store_test_results:
           path: test-results
       - codecov/upload:
-          file:
-            test-results
-            # bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+          file: test-results
+      # - run:
+      #     name: Upload coverage to Codecov
+      #     command: |
+      #       bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"

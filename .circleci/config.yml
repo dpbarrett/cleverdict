@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            pipenv run pytest --cov-config=.coveragerc;
+            pipenv run pytest --cov-config=.coveragerc --cov-report xml --cov-report html --cov;
       - store_test_results:
           path: test-results
       - codecov/upload:

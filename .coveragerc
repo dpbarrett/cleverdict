@@ -3,6 +3,7 @@
 branch = True
 data_file = test-results/.coverage
 ; omit =
+source = ./
 
 [report]
 # Regexes for lines to exclude from consideration

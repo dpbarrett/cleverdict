@@ -3,8 +3,8 @@
 <p align="center">
     <a href="https://pypi.python.org/pypi/cleverdict"><img alt="PyPI" src="https://img.shields.io/pypi/v/cleverdict.svg"></a>
     <a hre f="https://pypi.python.org/pypi/cleverdict"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/cleverdict.svg"></a>
-    <a href="https://circleci.com/gh/dpbarrett/cleverdict/tree/circleci-project-setup">
-        <img alt="circleci build status" src="https://circleci.com/gh/dpbarrett/cleverdict/tree/circleci-project-setup.svg?style=shield"></a>
+    <a href="https://circleci.com/gh/dpbarrett/cleverdict/tree/testing">
+        <img alt="circleci build status" src="https://circleci.com/gh/dpbarrett/cleverdict/tree/testing.svg?style=shield"></a>
     <a href="https://codecov.io/gh/dpbarrett/cleverdict">
         <img src="https://codecov.io/gh/dpbarrett/cleverdict/tree/testing/graph/badge.svg?token=H37SRJ8IGG"/>
     </a>

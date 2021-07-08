@@ -49,8 +49,10 @@ jobs:
             pipenv run pytest --cov-config=.coveragerc --cov-report xml --cov-report html --cov;
       - store_test_results:
           path: test-results
+      - store_artifacts:
+          path: test-results
       - codecov/upload:
-          file: test-results
+          file: test-results/coverage.xml
       # - run:
       #     name: Upload coverage to Codecov
       #     command: |
